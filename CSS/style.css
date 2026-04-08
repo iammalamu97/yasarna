@@ -1,0 +1,159 @@
+/* RESET */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+/* PAGE */
+.page {
+  max-width: 700px;
+  margin: auto;
+}
+
+/* ARABIC HEADER */
+.arabic-header {
+  text-align: center;
+  direction: rtl;
+  font-family: 'Amiri', serif;
+  font-size: 28px;
+  line-height: 1.8;
+}
+
+/* TITLES */
+.lesson-title {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.lesson-title h2 {
+   text-align: center;
+  font-family: 'Amiri', serif;
+  direction:rtl;
+  font-size: 30px;
+}
+
+.lesson-title h3 {
+   text-align: center;
+  font-size: 18px;
+}
+
+/* DESCRIPTION */
+.description {
+  text-align: center;
+  font-size: 14px;
+  margin: 15px 0;
+}
+
+/* ========================= */
+/* 🔴 DOT SYSTEM (CORE) */
+/* ========================= */
+
+/* BASE DOT */
+.dot {
+  width: 6px;
+  height: 6px;
+  background: black;
+  border-radius: 75%;
+  
+}
+
+/* PATTERN BASE */
+.pattern {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* SINGLE DOT */
+
+/* DOUBLE DOT */
+.pattern.double {
+  display: flex;
+  gap: 3px;
+}
+
+/* 🔺 TRIANGLE DOTS (VERY IMPORTANT) */
+.pattern.triangle {
+  position:relative;
+  width: 18px;
+  height: 14px;
+}
+
+/* Position dots absolutely for tight control */
+.pattern.triangle .dot {
+  position: absolute;
+}
+
+/* Top dot */
+.pattern.triangle .top {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Bottom left */
+.pattern.triangle .left {
+  bottom: 0;
+  left: 1px;
+}
+
+/* Bottom right */
+.pattern.triangle .right {
+  bottom: 0;
+  right: 1px;
+}
+
+/* ========================= */
+/* 📏 LAYOUT SYSTEM */
+/* ========================= */
+
+/* ROW OF PATTERNS */
+.dot-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+/* LINE EXERCISE */
+.line-exercise {
+  display:flex;
+  justify-content:space-between;
+  margin: 40px 0;
+  
+}
+
+/* LINE BLOCK */
+.line-block {
+  text-align: center;
+}
+
+/* LINE */
+.line {
+  width: 40px;
+  height: 2px;
+  background: black;
+  margin: 0 auto;
+}
+
+/* ABOVE / BELOW POSITIONING */
+.above {
+  margin-bottom: 5px;
+}
+
+.below {
+  margin-top: 5px;
+}
+.letter-row {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  direction: rtl;
+  font-family: 'Amiri', serif;
+  font-size: 30px;
+  margin: -2px 0;
+}
+
+.letter {
+  display: inline-block;
+}
