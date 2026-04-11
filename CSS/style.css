@@ -203,7 +203,25 @@ body {
   padding: 10px 6px;
 }
 
+.letter-row.no-lines {
+  border: none !important;
+  margin: 4px 0;
+}
+
 .letter-row.ruled {
+  border-top: 1px solid #333;
   border-bottom: 1px solid #333;
-  padding: 8px 0;
+  margin-bottom: -1px;
+  padding: 10px 16px;
+  justify-content: center;
+}
+
+.text-block {
+  margin: 0;
+}
+
+.block-divider {
+  border: none;
+  border-top: 2px solid #333;
+  margin: 4px 0;
 }
