@@ -2,13 +2,30 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 20px;
+  padding: 30px 20px;
+  background: #d6cfc4;
 }
 
 /* PAGE */
 .page {
   max-width: 700px;
   margin: auto;
+}
+
+/* DECORATIVE PAGE BORDER */
+.page-border {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  background: #fff;
+  /* outer solid border */
+  border: 3px solid #222;
+  /* inner decorative border via box-shadow + outline trick */
+  box-shadow:
+    inset 0 0 0 4px #fff,
+    inset 0 0 0 8px #222,
+    inset 0 0 0 12px #fff,
+    0 4px 16px rgba(0,0,0,0.25);
 }
 
 /* ARABIC HEADER */
@@ -151,7 +168,7 @@ body {
   direction: rtl;
   font-family: 'Amiri', serif;
   font-size: 30px;
-  margin: -2px 0;
+  margin: 4px 0;
 }
 
 .letter {
@@ -206,6 +223,7 @@ body {
 .letter-row.no-lines {
   border: none !important;
   margin: 4px 0;
+  padding: 8px 0;
 }
 
 .letter-row.ruled {
@@ -224,4 +242,49 @@ body {
   border: none;
   border-top: 2px solid #333;
   margin: 4px 0;
+}
+
+/* THREE COLUMN LAYOUT */
+.lesson-columns {
+  display: flex;
+  gap: 16px;
+  direction: rtl;
+}
+
+.col-block {
+  flex: 1;
+  border: 1px solid #333;
+}
+
+.col-title {
+  text-align: center;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 6px;
+  border-bottom: 1px solid #333;
+}
+
+.letter-row.line-below {
+  border-bottom: 1px solid #333;
+  padding: 10px 16px;
+  margin: 0;
+}
+
+/* NOTE ROW */
+.note-row {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  direction: ltr;
+  font-size: 15px;
+  margin: 10px 0;
+  font-family: Arial, sans-serif;
+}
+
+.note-item .arabic {
+  font-family: 'Amiri', serif;
+  font-size: 22px;
+  direction: rtl;
+  display: inline-block;
+  margin: 0 4px;
 }
