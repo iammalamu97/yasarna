@@ -86,6 +86,7 @@ async function loadLesson3() {
     container.appendChild(rowDiv);
   });
 }
+loadLesson3()
 
 // run
 loadBend();
@@ -200,6 +201,7 @@ async function loadLesson5() {
     container.appendChild(row);
   });
 }
+loadLesson5();
 
 async function loadLesson6() {
   const res = await fetch("data/lesson6.json");
@@ -220,7 +222,7 @@ async function loadLesson6() {
   });
 }
 
-loadLesson5();
+
 loadLesson6();
 
 async function loadLesson7() {
@@ -330,6 +332,7 @@ loadLesson15();
 async function loadLesson16() {
   const res = await fetch("data/lesson16.json");
   const data = await res.json();
+
   const container = document.getElementById("lesson16-content");
   if (!container) return;
   container.innerHTML = "";
@@ -367,20 +370,7 @@ async function loadLesson16Cont() {
     container.appendChild(row);
   });
 }
-  const drillContainer = document.getElementById("lesson16-drill");
-  if (drillContainer) {
-    data.drill.forEach(item => {
-      const row = document.createElement("div");
-      row.className = "letter-row ruled";
-      item.forEach(letter => {
-        const span = document.createElement("span");
-        span.textContent = letter;
-        row.appendChild(span);
-      });
-      drillContainer.appendChild(row);
-    });
-  }
-
+ 
 
 loadLesson16Cont();
 
@@ -683,9 +673,11 @@ async function loadLesson29() {
   const data = await res.json();
   const container = document.getElementById("lesson29-content");
   if (!container) return;
+  container.innerHTML = "";
   data.forEach(item => {
+    if (item === "sep") { container.appendChild(document.createElement("hr")); return; }
     const row = document.createElement("div");
-    row.className = "letter-row ruled";
+    row.className = "letter-row";
     item.forEach(word => {
       const span = document.createElement("span");
       span.textContent = word;
@@ -732,40 +724,13 @@ loadLesson29Cont();
 async function loadLesson30() {
   const res = await fetch("data/lesson30.json");
   const data = await res.json();
-
-  ["section1", "section2", "section3"].forEach((key, i) => {
-    const container = document.getElementById(`lesson30-s${i + 1}`);
-    if (!container) return;
-    data[key].forEach(item => {
-      const row = document.createElement("div");
-      row.className = "letter-row ruled";
-      item.forEach(word => {
-        const span = document.createElement("span");
-        span.textContent = word;
-        row.appendChild(span);
-      });
-      container.appendChild(row);
-    });
-  });
-}
-
-loadLesson30();
-
-async function loadLesson30() {
-  const res = await fetch("data/lesson30.json");
-  const data = await res.json();
-  const container = document.getElementById("lesson30-content");
-  if (!container) return;
+const container = document.getElementById("lesson30-content");
+   if (!container) return;
   container.innerHTML = "";
   data.forEach(item => {
-    if (item === "sep") {
-      const hr = document.createElement("hr");
-      hr.className = "block-divider";
-      container.appendChild(hr);
-      return;
-    }
+    if (item === "sep") { container.appendChild(document.createElement("hr")); return; }
     const row = document.createElement("div");
-    row.className = "letter-row ruled";
+    row.className = "letter-row";
     item.forEach(word => {
       const span = document.createElement("span");
       span.textContent = word;
@@ -777,37 +742,62 @@ async function loadLesson30() {
 
 loadLesson30();
 
+
+
 async function loadLesson31() {
   const res = await fetch("data/lesson31.json");
   const data = await res.json();
 
-  ["section1", "section2", "section3"].forEach((key, i) => {
-    const container = document.getElementById(`lesson31-s${i + 1}`);
-    if (!container) return;
-    data[key].forEach(item => {
-      const row = document.createElement("div");
-      row.className = "letter-row ruled";
-      item.forEach(word => {
-        const span = document.createElement("span");
-        span.textContent = word;
-        row.appendChild(span);
-      });
-      container.appendChild(row);
+  const container = document.getElementById("lesson31-content");
+   if (!container) return;
+  container.innerHTML = "";
+  data.forEach(item => {
+    if (item === "sep") { container.appendChild(document.createElement("hr")); return; }
+    const row = document.createElement("div");
+    row.className = "letter-row";
+    item.forEach(word => {
+      const span = document.createElement("span");
+      span.textContent = word;
+      row.appendChild(span);
     });
+    container.appendChild(row);
   });
 }
-
 loadLesson31();
+
+async function loadLesson31cont() {
+  const res = await fetch("data/lesson31cont.json");
+  const data = await res.json();
+
+  const container = document.getElementById("lesson31-cont");
+   if (!container) return;
+  container.innerHTML = "";
+  data.forEach(item => {
+    if (item === "sep") { container.appendChild(document.createElement("hr")); return; }
+    const row = document.createElement("div");
+    row.className = "letter-row";
+    item.forEach(word => {
+      const span = document.createElement("span");
+      span.textContent = word;
+      row.appendChild(span);
+    });
+    container.appendChild(row);
+  });
+}
+loadLesson31cont();
+
 
 async function loadLesson32() {
   const res = await fetch("data/lesson32.json");
   const data = await res.json();
   const container = document.getElementById("lesson32-content");
-  if (!container) return;
+
+   if (!container) return;
   container.innerHTML = "";
   data.forEach(item => {
+    if (item === "sep") { container.appendChild(document.createElement("hr")); return; }
     const row = document.createElement("div");
-    row.className = "letter-row ruled";
+    row.className = "letter-row";
     item.forEach(word => {
       const span = document.createElement("span");
       span.textContent = word;
@@ -823,36 +813,45 @@ async function loadLesson33() {
   const res = await fetch("data/lesson33.json");
   const data = await res.json();
 
-  const s1 = document.getElementById("lesson33-s1");
-  if (s1) {
-    data.section1.forEach(item => {
-      const row = document.createElement("div");
-      row.className = "letter-row ruled";
-      item.forEach(word => {
-        const span = document.createElement("span");
-        span.textContent = word;
-        row.appendChild(span);
-      });
-      s1.appendChild(row);
-    });
-  }
+  const container = document.getElementById("lesson33-content");
 
-  const s2 = document.getElementById("lesson33-s2");
-  if (s2) {
-    data.section2.forEach(item => {
-      const row = document.createElement("div");
-      row.className = "letter-row no-lines";
-      item.forEach(word => {
-        const span = document.createElement("span");
-        span.textContent = word;
-        row.appendChild(span);
-      });
-      s2.appendChild(row);
+   if (!container) return;
+  container.innerHTML = "";
+  data.forEach(item => {
+    if (item === "sep") { container.appendChild(document.createElement("hr")); return; }
+    const row = document.createElement("div");
+    row.className = "letter-row";
+    item.forEach(word => {
+      const span = document.createElement("span");
+      span.textContent = word;
+      row.appendChild(span);
     });
-  }
+    container.appendChild(row);
+  });
 }
-
 loadLesson33();
+
+async function loadLesson33cont() {
+  const res = await fetch("data/lesson33cont.json");
+  const data = await res.json();
+
+  const container = document.getElementById("lesson33-cont");
+
+   if (!container) return;
+  container.innerHTML = "";
+  data.forEach(item => {
+    if (item === "sep") { container.appendChild(document.createElement("hr")); return; }
+    const row = document.createElement("div");
+    row.className = "letter-row";
+    item.forEach(word => {
+      const span = document.createElement("span");
+      span.textContent = word;
+      row.appendChild(span);
+    });
+    container.appendChild(row);
+  });
+}
+loadLesson33cont();
 
 async function loadLesson34() {
   const res = await fetch("data/lesson34.json");
@@ -877,7 +876,7 @@ async function loadLesson34() {
     if (!container) return;
     data[key].forEach(item => {
       const row = document.createElement("div");
-      row.className = "letter-row ruled";
+      row.className = "letter-row ";
       item.forEach(word => {
         const span = document.createElement("span");
         span.textContent = word;
@@ -898,7 +897,7 @@ async function loadLesson35() {
   if (intro) {
     data.intro.forEach(item => {
       const row = document.createElement("div");
-      row.className = "letter-row ruled";
+      row.className = "letter-row ";
       item.forEach(w => { const s = document.createElement("span"); s.textContent = w; row.appendChild(s); });
       intro.appendChild(row);
     });
@@ -919,7 +918,7 @@ async function loadLesson35() {
     if (!container) return;
     data[key].forEach(item => {
       const row = document.createElement("div");
-      row.className = "letter-row ruled";
+      row.className = "letter-row";
       item.forEach(w => { const s = document.createElement("span"); s.textContent = w; row.appendChild(s); });
       container.appendChild(row);
     });
@@ -933,11 +932,11 @@ async function loadLesson39() {
   const data = await res.json();
 
   [
-    ["intro","lesson39-intro","ruled"],
+    ["intro","lesson39-intro",],
     ["lesson15","lesson39-l15","no-lines"],
-    ["mixed15","lesson39-mixed15","ruled"],
-    ["lesson16","lesson39-l16","no-lines"],
-    ["mixed16","lesson39-mixed16","ruled"]
+    ["mixed15","lesson39-mixed15",],
+    ["lesson16","lesson39-l16",],
+    ["mixed16","lesson39-mixed16",]
   ].forEach(([key, id, cls]) => {
     const container = document.getElementById(id);
     if (!container) return;
@@ -957,9 +956,9 @@ async function loadLesson36() {
   const data = await res.json();
 
   [
-    ["intro","lesson36-intro","ruled"],
-    ["lesson17","lesson36-l17","no-lines"],
-    ["lesson18","lesson36-l18","ruled"]
+    ["intro","lesson36-intro",],
+    ["lesson17","lesson36-l17",],
+    ["lesson18","lesson36-l18",]
   ].forEach(([key, id, cls]) => {
     const container = document.getElementById(id);
     if (!container) return;
@@ -978,7 +977,7 @@ async function loadLesson37() {
   const res = await fetch("data/lesson37.json");
   const data = await res.json();
 
-  [["letters","lesson37-letters","ruled"], ["mixed","lesson37-mixed","ruled"]].forEach(([key, id, cls]) => {
+  [["letters","lesson37-letters",], ["mixed","lesson37-mixed",]].forEach(([key, id, cls]) => {
     const container = document.getElementById(id);
     if (!container) return;
     data[key].forEach(item => {
@@ -1070,7 +1069,7 @@ async function loadLesson42() {
   if (l22) {
     data.lesson22.forEach(item => {
       const row = document.createElement("div");
-      row.className = "letter-row line-below";
+      row.className = "letter-row";
       item.forEach(w => { const s = document.createElement("span"); s.textContent = w; row.appendChild(s); });
       l22.appendChild(row);
     });
@@ -1162,20 +1161,7 @@ async function loadLesson45() {
 
 loadLesson45();
 
-async function loadLesson45() {
-  const res = await fetch("data/lesson45.json");
-  const data = await res.json();
-  [["lesson24","lesson45-l24"],["mixed24","lesson45-mixed24"],["lesson25","lesson45-l25"],["mixed25","lesson45-mixed25"]].forEach(([key,id]) => {
-    const c = document.getElementById(id);
-    if (!c) return;
-    data[key].forEach(item => {
-      const row = document.createElement("div");
-      row.className = "letter-row no-lines";
-      item.forEach(w => { const s = document.createElement("span"); s.textContent = w; row.appendChild(s); });
-      c.appendChild(row);
-    });
-  });
-}
+
 
 async function loadLesson46() {
   const res = await fetch("data/lesson46.json");
@@ -1236,7 +1222,7 @@ async function loadLesson48() {
   if (l29) {
     data.lesson29.forEach(item => {
       const row = document.createElement("div");
-      row.className = "letter-row line-below";
+      row.className = "letter-row";
       item.forEach(w => { const s = document.createElement("span"); s.textContent = w; row.appendChild(s); });
       l29.appendChild(row);
     });
@@ -1290,7 +1276,7 @@ async function loadLesson50() {
     if (!c) return;
     data[key].forEach(item => {
       const row = document.createElement("div");
-      row.className = "letter-row line-below";
+      row.className = "letter-row ";
       item.forEach(w => { const s = document.createElement("span"); s.textContent = w; row.appendChild(s); });
       c.appendChild(row);
     });
@@ -1303,9 +1289,9 @@ async function loadLesson51() {
   const res = await fetch("data/lesson51.json");
   const data = await res.json();
 
-  [["lesson32","lesson51-l32","line-below"],
+  [["lesson32","lesson51-l32",],
    ["note","lesson51-note","no-lines"],
-   ["lesson32b","lesson51-l32b","line-below"],
+   ["lesson32b","lesson51-l32b",],
    ["mixed","lesson51-mixed","no-lines"]
   ].forEach(([key,id,cls]) => {
     const c = document.getElementById(id);
@@ -1325,11 +1311,18 @@ async function loadLesson52() {
   const res = await fetch("data/lesson52.json");
   const data = await res.json();
   const container = document.getElementById("lesson52-content");
-  if (!container) return;
+ 
+   if (!container) return;
+  container.innerHTML = "";
   data.forEach(item => {
+    if (item === "sep") { container.appendChild(document.createElement("hr")); return; }
     const row = document.createElement("div");
-    row.className = "letter-row line-below";
-    item.forEach(w => { const s = document.createElement("span"); s.textContent = w; row.appendChild(s); });
+    row.className = "letter-row";
+    item.forEach(word => {
+      const span = document.createElement("span");
+      span.textContent = word;
+      row.appendChild(span);
+    });
     container.appendChild(row);
   });
 }
@@ -1341,9 +1334,9 @@ async function loadLesson53() {
   const data = await res.json();
 
   [["intro","lesson53-intro","no-lines"],
-   ["lesson33","lesson53-l33","line-below"],
-   ["mixed1","lesson53-mixed1","line-below"],
-   ["mixed2","lesson53-mixed2","line-below"]
+   ["lesson33","lesson53-l33",],
+   ["mixed1","lesson53-mixed1",],
+   ["mixed2","lesson53-mixed2",]
   ].forEach(([key,id,cls]) => {
     const c = document.getElementById(id);
     if (!c) return;
@@ -1362,9 +1355,9 @@ async function loadLesson54() {
   const res = await fetch("data/lesson54.json");
   const data = await res.json();
 
-  [["intro","lesson54-intro","line-below"],
-   ["lesson34","lesson54-l34","line-below"],
-   ["lesson35","lesson54-l35","line-below"]
+  [["intro","lesson54-intro",],
+   ["lesson34","lesson54-l34",],
+   ["lesson35","lesson54-l35",]
   ].forEach(([key,id,cls]) => {
     const c = document.getElementById(id);
     if (!c) return;
@@ -1383,8 +1376,8 @@ async function loadLesson55() {
   const res = await fetch("data/lesson55.json");
   const data = await res.json();
 
-  [["lesson36","lesson55-l36","line-below"],
-   ["lesson37","lesson55-l37","line-below"]
+  [["lesson36","lesson55-l36",],
+   ["lesson37","lesson55-l37",]
   ].forEach(([key,id,cls]) => {
     const c = document.getElementById(id);
     if (!c) return;
@@ -1399,35 +1392,17 @@ async function loadLesson55() {
 
 loadLesson55();
 
-async function loadLesson55() {
-  const res = await fetch("data/lesson55.json");
-  const data = await res.json();
 
-  [["lesson36","lesson55-l36","line-below"],
-   ["lesson37","lesson55-l37","line-below"]
-  ].forEach(([key,id,cls]) => {
-    const c = document.getElementById(id);
-    if (!c) return;
-    data[key].forEach(item => {
-      const row = document.createElement("div");
-      row.className = `letter-row ${cls}`;
-      item.forEach(w => { const s = document.createElement("span"); s.textContent = w; row.appendChild(s); });
-      c.appendChild(row);
-    });
-  });
-}
-
-loadLesson55();
 
 async function loadLesson56() {
   const res = await fetch("data/lesson56.json");
   const data = await res.json();
 
   [
-    ["rows",      "lesson56-rows",      "line-below"],
-    ["smallrow",  "lesson56-smallrow",  "line-below"],
-    ["examples1", "lesson56-examples1", "line-below"],
-    ["examples2", "lesson56-examples2", "line-below"]
+    ["rows",      "lesson56-rows",      ],
+    ["smallrow",  "lesson56-smallrow", ],
+    ["examples1", "lesson56-examples1", ],
+    ["examples2", "lesson56-examples2", ]
   ].forEach(([key, id, cls]) => {
     const c = document.getElementById(id);
     if (!c) return;
