@@ -1,0 +1,380 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Digital Yasarna</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0b1f14;
+      padding: 24px 16px;
+    }
+
+    .card {
+      display: flex;
+      width: 100%;
+      max-width: 860px;
+      min-height: 520px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(212,175,55,0.2),
+                  0 24px 80px rgba(0,0,0,0.6),
+                  0 0 60px rgba(212,175,55,0.08);
+    }
+
+    /* LEFT */
+    .left {
+      flex: 0 0 380px;
+      background: #0d2818;
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px 0 0 24px;
+    }
+    .left::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' fill='none' stroke='rgba(212,175,55,0.07)' stroke-width='1'/%3E%3Ccircle cx='30' cy='30' r='10' fill='none' stroke='rgba(212,175,55,0.05)' stroke-width='1'/%3E%3C/svg%3E");
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .brand-row {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 16px; position: relative; z-index: 1;
+    }
+    .brand-icon { font-size: 28px; line-height: 1; }
+    .brand-name {
+      font-size: 13px; letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(212,175,55,0.6); font-weight: 600;
+    }
+    .brand-name span { color: #d4af37; }
+
+    .bismillah {
+      font-family: 'Amiri', serif;
+      font-size: clamp(13px, 1.4vw, 17px);
+      color: #d4af37;
+      direction: rtl;
+      line-height: 1.9;
+      margin-bottom: 14px;
+      position: relative; z-index: 1;
+    }
+
+    .page-heading {
+      font-size: clamp(22px, 2.8vw, 32px);
+      font-weight: 700; color: #fff; line-height: 1.2;
+      margin-bottom: 6px; position: relative; z-index: 1;
+    }
+    .page-heading span { color: #d4af37; }
+    .page-sub {
+      font-size: 12px; color: rgba(255,255,255,0.45);
+      font-weight: 300; margin-bottom: 18px;
+      position: relative; z-index: 1;
+    }
+
+    .role-toggle {
+      display: flex;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(212,175,55,0.15);
+      border-radius: 10px; padding: 4px;
+      margin-bottom: 22px; position: relative; z-index: 1;
+    }
+    .role-btn {
+      flex: 1; padding: 9px 8px; border: none; border-radius: 7px;
+      font-size: 13px; font-weight: 600; font-family: inherit;
+      cursor: pointer; background: transparent; color: rgba(255,255,255,0.4);
+      transition: all 0.2s;
+    }
+    .role-btn.active {
+      background: #d4af37; color: #fff;
+      box-shadow: 0 3px 12px rgba(212,175,55,0.3);
+    }
+
+    .sub-tabs {
+      display: flex;
+      border-bottom: 1px solid rgba(212,175,55,0.15);
+      margin-bottom: 20px; position: relative; z-index: 1;
+    }
+    .sub-tab {
+      flex: 1; padding: 8px 4px; text-align: center;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      color: rgba(255,255,255,0.3);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px; transition: all 0.15s;
+    }
+    .sub-tab.active { color: #d4af37; border-bottom-color: #d4af37; }
+
+    .form-title { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 2px; position: relative; z-index: 1; }
+    .form-sub { font-size: 11px; color: rgba(255,255,255,0.35); margin-bottom: 18px; font-weight: 300; position: relative; z-index: 1; }
+
+    .form-group { margin-bottom: 13px; position: relative; z-index: 1; }
+    .form-group label {
+      display: block; font-size: 10px; font-weight: 600;
+      color: rgba(212,175,55,0.8); margin-bottom: 5px;
+      text-transform: uppercase; letter-spacing: 0.8px;
+    }
+    .form-group input {
+      width: 100%; padding: 11px 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 8px; font-size: 13px; font-family: inherit;
+      color: #fff; transition: border-color 0.2s, background 0.2s;
+    }
+    .form-group input::placeholder { color: rgba(255,255,255,0.2); }
+    .form-group input:focus {
+      outline: none; border-color: #d4af37;
+      background: rgba(255,255,255,0.09);
+    }
+
+    .btn-main {
+      width: 100%; padding: 12px;
+      background: #d4af37; color: #fff;
+      border: none; border-radius: 8px;
+      font-size: 14px; font-weight: 700; font-family: inherit;
+      cursor: pointer; margin-top: 4px; letter-spacing: 0.3px;
+      transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(212,175,55,0.3);
+      position: relative; z-index: 1;
+    }
+    .btn-main:hover {
+      background: #e8c84a;
+      box-shadow: 0 6px 20px rgba(212,175,55,0.45);
+      transform: translateY(-1px);
+    }
+
+    .msg { font-size: 11px; margin-top: 8px; min-height: 14px; text-align: center; position: relative; z-index: 1; }
+    .msg.error { color: #e87070; }
+    .msg.success { color: #6fcf97; }
+    .hint { font-size: 11px; color: rgba(255,255,255,0.25); text-align: center; margin-top: 12px; position: relative; z-index: 1; }
+    .hint strong { color: rgba(212,175,55,0.7); }
+
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* RIGHT */
+    .right { flex: 1; position: relative; overflow: hidden; border-radius: 0 24px 24px 0; }
+    .right img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center center;
+    }
+    .right::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(13,40,24,0.5) 0%, transparent 40%);
+      z-index: 1;
+    }
+    .right-arch {
+      position: absolute; top: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 220px; height: 220px;
+      border: 2px solid rgba(212,175,55,0.25);
+      border-radius: 50%; z-index: 2; pointer-events: none;
+    }
+    .right-arch::after {
+      content: ''; position: absolute; inset: 14px;
+      border: 1px solid rgba(212,175,55,0.12); border-radius: 50%;
+    }
+
+    @media (max-width: 700px) {
+      .card { flex-direction: column; min-height: unset; }
+      .right { flex: none; height: 220px; }
+      .left { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <div class="left">
+
+    <div class="brand-row">
+      <div class="brand-icon">&#9770;&#65039;</div>
+      <div class="brand-name">Digital <span>Yasarna</span></div>
+    </div>
+
+    <div class="bismillah">
+      <p>&#1576;&#1616;&#1587;&#1618;&#1605;&#1616; &#1575;&#1604;&#1604;&#1617;&#1614;&#1607;&#1616; &#1575;&#1604;&#1585;&#1617;&#1614;&#1581;&#1618;&#1605;&#1614;&#1648;&#1606;&#1616; &#1575;&#1604;&#1585;&#1617;&#1614;&#1581;&#1616;&#1610;&#1605;&#1616;</p>
+      <p>&#1606;&#1614;&#1581;&#1618;&#1605;&#1614;&#1583;&#1615;&#1607;&#1615; &#1608;&#1614;&#1606;&#1615;&#1589;&#1614;&#1604;&#1617;&#1616;&#1610; &#1593;&#1614;&#1604;&#1614;&#1609;&#1648; &#1585;&#1614;&#1587;&#1615;&#1608;&#1604;&#1616;&#1607;&#1616; &#1575;&#1604;&#1618;&#1603;&#1614;&#1585;&#1616;&#1610;&#1605;&#1616;</p>
+    </div>
+
+    <div class="page-heading">Learn <span>Yasarna</span><br>the digital way</div>
+    <div class="page-sub">An interactive Quranic literacy programme</div>
+
+    <div class="role-toggle">
+      <button class="role-btn active" id="btnStudent" onclick="switchRole('student')">Student</button>
+      <button class="role-btn" id="btnTeacher" onclick="switchRole('teacher')">Lecturer</button>
+    </div>
+
+    <!-- STUDENT -->
+    <div id="studentSection">
+      <div class="sub-tabs">
+        <div class="sub-tab active" id="tabLogin" onclick="switchTab('login')">Login</div>
+        <div class="sub-tab" id="tabRegister" onclick="switchTab('register')">Register</div>
+      </div>
+
+      <div class="view active" id="viewLogin">
+        <div class="form-title">Welcome back</div>
+        <div class="form-sub">Sign in to continue your learning journey</div>
+        <div class="form-group">
+          <label>Student Number</label>
+          <input type="text" id="lRegNumber" autocomplete="off" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="lPassword" />
+        </div>
+        <button class="btn-main" onclick="loginStudent()">Start Learning &rarr;</button>
+        <p class="msg" id="msgLogin"></p>
+        <p class="hint">No account? Click <strong>Register</strong> above.</p>
+      </div>
+
+      <div class="view" id="viewRegister">
+        <div class="form-title">Create account</div>
+        <div class="form-sub">Join and begin your Quranic journey</div>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="rFullName" autocomplete="off" />
+        </div>
+        <div class="form-group">
+          <label>Student Number</label>
+          <input type="text" id="rRegNumber" autocomplete="off" />
+        </div>
+        <div class="form-group">
+          <label>Create Password</label>
+          <input type="password" id="rPassword" />
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" id="rConfirm" />
+        </div>
+        <button class="btn-main" onclick="registerStudent()">Register &rarr;</button>
+        <p class="msg" id="msgRegister"></p>
+      </div>
+    </div>
+
+    <!-- LECTURER -->
+    <div id="teacherSection" style="display:none;">
+      <div class="form-title">Lecturer Portal</div>
+      <div class="form-sub">Sign in to access the evaluation dashboard</div>
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="tName" autocomplete="off" />
+      </div>
+      <div class="form-group">
+        <label>PIN</label>
+        <input type="password" id="tPin" maxlength="10" />
+      </div>
+      <button class="btn-main" onclick="loginTeacher()">Enter Dashboard &rarr;</button>
+      <p class="msg" id="msgTeacher"></p>
+      <p class="hint">Default PIN: <strong>1234</strong></p>
+    </div>
+
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+    <img src="images/hero.jpg" alt="Students reading Quran" onerror="this.style.background='#0d2818'" />
+    <div class="right-arch"></div>
+  </div>
+
+</div>
+
+<script>
+  const TEACHER_PIN = '1234';
+
+  function switchRole(role) {
+    const isStudent = role === 'student';
+    document.getElementById('btnStudent').classList.toggle('active', isStudent);
+    document.getElementById('btnTeacher').classList.toggle('active', !isStudent);
+    document.getElementById('studentSection').style.display = isStudent ? '' : 'none';
+    document.getElementById('teacherSection').style.display = isStudent ? 'none' : '';
+  }
+
+  function switchTab(tab) {
+    const isLogin = tab === 'login';
+    document.getElementById('tabLogin').classList.toggle('active', isLogin);
+    document.getElementById('tabRegister').classList.toggle('active', !isLogin);
+    document.getElementById('viewLogin').classList.toggle('active', isLogin);
+    document.getElementById('viewRegister').classList.toggle('active', !isLogin);
+    document.getElementById('msgLogin').textContent = '';
+    document.getElementById('msgRegister').textContent = '';
+  }
+
+  function getStudents() { return JSON.parse(localStorage.getItem('yasarna_students') || '[]'); }
+  function saveStudents(list) { localStorage.setItem('yasarna_students', JSON.stringify(list)); }
+
+  function registerStudent() {
+    const name    = document.getElementById('rFullName').value.trim();
+    const reg     = document.getElementById('rRegNumber').value.trim();
+    const pass    = document.getElementById('rPassword').value;
+    const confirm = document.getElementById('rConfirm').value;
+    const msg     = document.getElementById('msgRegister');
+    msg.className = 'msg error';
+    if (!name || !reg || !pass || !confirm) { msg.textContent = 'Please fill in all fields.'; return; }
+    if (pass !== confirm) { msg.textContent = 'Passwords do not match.'; return; }
+    if (pass.length < 4)  { msg.textContent = 'Password must be at least 4 characters.'; return; }
+    const students = getStudents();
+    if (students.find(s => s.regNumber.toLowerCase() === reg.toLowerCase())) {
+      msg.textContent = 'This student number is already registered.'; return;
+    }
+    students.push({ name, regNumber: reg, password: pass, date: new Date().toLocaleDateString() });
+    saveStudents(students);
+    msg.className = 'msg success';
+    msg.textContent = 'Registered! Redirecting to login...';
+    ['rFullName','rRegNumber','rPassword','rConfirm'].forEach(id => document.getElementById(id).value = '');
+    setTimeout(() => switchTab('login'), 1600);
+  }
+
+  function loginStudent() {
+    const reg  = document.getElementById('lRegNumber').value.trim();
+    const pass = document.getElementById('lPassword').value;
+    const msg  = document.getElementById('msgLogin');
+    msg.className = 'msg error';
+    if (!reg || !pass) { msg.textContent = 'Please enter your student number and password.'; return; }
+    const students = getStudents();
+    const found = students.find(s => s.regNumber.toLowerCase() === reg.toLowerCase());
+    if (!found) { msg.textContent = 'Student number not found. Please register first.'; return; }
+    if (found.password !== pass) { msg.textContent = 'Incorrect password.'; return; }
+    sessionStorage.setItem('ya_role', 'student');
+    sessionStorage.setItem('ya_student', JSON.stringify(found));
+    window.location.href = 'index.html';
+  }
+
+  function loginTeacher() {
+    const name = document.getElementById('tName').value.trim();
+    const pin  = document.getElementById('tPin').value;
+    const msg  = document.getElementById('msgTeacher');
+    msg.className = 'msg error';
+    if (!name) { msg.textContent = 'Please enter your name.'; return; }
+    if (pin !== TEACHER_PIN) { msg.textContent = 'Incorrect PIN.'; return; }
+    sessionStorage.setItem('ya_role', 'teacher');
+    sessionStorage.setItem('ya_teacher', name);
+    window.location.href = 'evaluate.html';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    if (document.getElementById('teacherSection').style.display !== 'none') { loginTeacher(); return; }
+    const isLogin = document.getElementById('viewLogin').classList.contains('active');
+    if (isLogin) loginStudent(); else registerStudent();
+  });
+
+  const role = sessionStorage.getItem('ya_role');
+  if (role === 'teacher') window.location.href = 'evaluate.html';
+  else if (role === 'student') window.location.href = 'index.html';
+</script>
+</body>
+</html>

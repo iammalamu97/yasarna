@@ -13,6 +13,11 @@
 
 <body><div class="page-border">
 
+ <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:6px 0 10px;">
+   <span id="studentWelcome" style="color:#555;font-weight:bold;"></span>
+   <button onclick="sessionStorage.clear();window.location.href='login.html'" style="background:none;border:1px solid #aaa;border-radius:4px;padding:4px 10px;cursor:pointer;font-size:12px;">Logout</button>
+ </div>
+
  <div class="lesson-title">
     <h2>دَرْسٌ نَمْبَر ٢</h2>
     <h3>Single Letters</h3>
@@ -54,5 +59,15 @@ These are to be repeated, till the whole of it is learnt in that order. This wil
 </div>
 
     <script src="js/app.js"></script>
+<script>
+  // Auth guard for students
+  (function() {
+    const role = sessionStorage.getItem('ya_role');
+    if (!role) window.location.href = 'login.html';
+    const s = JSON.parse(sessionStorage.getItem('ya_student') || '{}');
+    const el = document.getElementById('studentWelcome');
+    if (el && s.name) el.textContent = 'Welcome, ' + s.name + ' (' + s.regNumber + ')';
+  })();
+</script>
 </div></body>
 </html>

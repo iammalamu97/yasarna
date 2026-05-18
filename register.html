@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Management – Digital Yasarna</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="CSS/style.css" />
+  <style>
+    .top-bar { display:flex; justify-content:space-between; align-items:center; font-size:13px; margin-bottom:10px; }
+    .top-bar span { color:#555; font-weight:bold; }
+    .btn-logout { background:none; border:1px solid #aaa; border-radius:4px; padding:4px 10px; cursor:pointer; font-size:12px; }
+    .section-title { font-size:15px; font-weight:bold; margin:20px 0 8px; }
+    .search-row { display:flex; gap:10px; margin-bottom:12px; }
+    .search-row input { flex:1; padding:8px 12px; border:1px solid #bbb; border-radius:5px; font-size:13px; }
+    .student-table { width:100%; border-collapse:collapse; font-size:14px; }
+    .student-table th, .student-table td { border:1px solid #ccc; padding:8px 12px; text-align:left; }
+    .student-table th { background:#1a1a2e; color:#e2b04a; }
+    .student-table tr:nth-child(even) { background:#f5f2ec; }
+    .btn-delete { background:none; border:none; color:#c0392b; cursor:pointer; font-size:13px; padding:0; }
+    .btn-delete:hover { text-decoration:underline; }
+    .empty-note { text-align:center; color:#888; font-size:13px; padding:20px 0; }
+    .badge-count { background:#1a1a2e; color:#e2b04a; border-radius:10px; padding:2px 10px; font-size:13px; margin-left:8px; }
+  </style>
+</head>
+<body>
+<div class="page-border">
+<div class="page">
+
+  <div class="arabic-header">
+    <p>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+  </div>
+
+  <div class="top-bar">
+    <span id="teacherWelcome"></span>
+    <button class="btn-logout" onclick="logout()">Logout</button>
+  </div>
+
+  <div class="lesson-title">
+    <h2 style="font-family:Arial;font-size:20px;direction:ltr;">Student Management</h2>
+    <h3>View and manage registered students</h3>
+  </div>
+
+  <div class="section-title">
+    Registered Students <span class="badge-count" id="countBadge">0</span>
+  </div>
+
+    <div class="search-row">
+    <input type="text" id="searchInput" placeholder="Search by name or student number..." oninput="renderTable()" />
+  </div>
+
+  <p class="empty-note" id="emptyNote">No students registered yet.</p>
+  <table class="student-table" id="studentTable" style="display:none">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Full Name</th>
+        <th>Student Number</th>
+        <th>Registered On</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="studentTableBody"></tbody>
+  </table>
+
+  <div class="page-nav">
+    <a href="evaluate.html" class="btn-prev">&larr; Evaluations</a>
+    <a href="evaluate.html" class="btn-next">Evaluate &rarr;</a>
+  </div>
+
+</div>
+</div>
+
+<script>
+  (function() {
+    if (sessionStorage.getItem('ya_role') !== 'teacher') window.location.href = 'login.html';
+  })();
+
+  function getStudents() {
+    return JSON.parse(localStorage.getItem('yasarna_students') || '[]');
+  }
+  function saveStudents(list) {
+    localStorage.setItem('yasarna_students', JSON.stringify(list));
+  }
+  function escHtml(str) {
+    return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function renderTable() {
+    const query = (document.getElementById('searchInput').value || '').toLowerCase();
+    const all = getStudents();
+    const students = query
+      ? all.filter(s => s.name.toLowerCase().includes(query) || s.regNumber.toLowerCase().includes(query))
+      : all;
+
+    document.getElementById('countBadge').textContent = all.length;
+    const tbody = document.getElementById('studentTableBody');
+    const table = document.getElementById('studentTable');
+    const empty = document.getElementById('emptyNote');
+    tbody.innerHTML = '';
+
+    if (students.length === 0) {
+      table.style.display = 'none';
+      empty.style.display = '';
+      empty.textContent = query ? 'No students match your search.' : 'No students registered yet.';
+      return;
+    }
+
+    table.style.display = '';
+    empty.style.display = 'none';
+
+    students.forEach((s) => {
+      const origIndex = all.indexOf(s);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${origIndex + 1}</td>
+        <td>${escHtml(s.name)}</td>
+        <td>${escHtml(s.regNumber)}</td>
+        <td>${escHtml(s.date || '—')}</td>
+        <td><button class="btn-delete" onclick="deleteStudent(${origIndex})">Remove</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function deleteStudent(index) {
+    const students = getStudents();
+    if (!confirm('Remove ' + students[index].name + '?')) return;
+    students.splice(index, 1);
+    saveStudents(students);
+    renderTable();
+  }
+
+  function logout() {
+    sessionStorage.clear();
+    window.location.href = 'login.html';
+  }
+
+  const tName = sessionStorage.getItem('ya_teacher');
+  if (tName) document.getElementById('teacherWelcome').textContent = 'Welcome, ' + tName;
+  renderTable();
+</script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Evaluation – Digital Yasarna</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="CSS/style.css" />
+  <style>
+    .form-card {
+      background: #faf8f4;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 24px 28px;
+      margin: 24px 0;
+    }
+    .form-card h3 { margin: 0 0 18px; font-size: 18px; text-align: center; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; }
+    .form-group select,
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    .form-group textarea { resize: vertical; min-height: 70px; }
+    .rating-group { display: flex; gap: 8px; flex-wrap: wrap; }
+    .rating-group label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: normal;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .btn-submit {
+      width: 100%;
+      padding: 10px;
+      background: #1a1a2e;
+      color: #e2b04a;
+      border: 1px solid #e2b04a;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+    .btn-submit:hover { background: #e2b04a; color: #1a1a2e; }
+    .msg { text-align: center; font-size: 13px; margin-top: 10px; min-height: 18px; }
+    .msg.success { color: green; }
+    .msg.error { color: red; }
+    .section-title { font-size: 15px; font-weight: bold; margin: 20px 0 8px; }
+    .eval-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 10px;
+    }
+    .eval-table th, .eval-table td {
+      border: 1px solid #ccc;
+      padding: 7px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .eval-table th { background: #1a1a2e; color: #e2b04a; }
+    .eval-table tr:nth-child(even) { background: #f5f2ec; }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .badge-excellent { background: #d4edda; color: #155724; }
+    .badge-good { background: #cce5ff; color: #004085; }
+    .badge-average { background: #fff3cd; color: #856404; }
+    .badge-needswork { background: #f8d7da; color: #721c24; }
+    .empty-note { text-align: center; color: #888; font-size: 13px; padding: 14px 0; }
+    .filter-row { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+    .filter-row select { padding: 7px 10px; border: 1px solid #aaa; border-radius: 5px; font-size: 13px; }
+    .btn-delete {
+      background: none; border: none; color: #c0392b;
+      cursor: pointer; font-size: 12px; padding: 0;
+    }
+    .btn-delete:hover { text-decoration: underline; }
+    .no-students-note {
+      text-align: center; padding: 20px;
+      background: #fff3cd; border: 1px solid #ffc107;
+      border-radius: 6px; font-size: 14px; color: #856404;
+    }
+  </style>
+</head>
+<body>
+<div class="page-border">
+<div class="page">
+
+  <div class="arabic-header">
+    <p>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:4px;">
+    <span id="teacherWelcome" style="color:#555;"></span>
+    <button onclick="logout()" style="background:none;border:1px solid #aaa;border-radius:4px;padding:4px 10px;cursor:pointer;font-size:12px;">Logout</button>
+  </div>
+
+  <div class="lesson-title">
+    <h2>Student Evaluation</h2>
+    <h3>Teacher's evaluation form</h3>
+  </div>
+
+  <div id="noStudentsWarn" class="no-students-note" style="display:none">
+    No students are registered yet. <a href="register.html">Register students first</a>.
+  </div>
+
+  <div id="evalFormWrap">
+    <div class="form-card">
+      <h3>New Evaluation</h3>
+
+      <div class="form-group">
+        <label for="evalStudent">Student</label>
+        <select id="evalStudent">
+          <option value="">-- Select student --</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="evalLesson">Lesson / Topic</label>
+        <input type="text" id="evalLesson" placeholder="e.g. Lesson 5 – Alif" />
+      </div>
+
+      <div class="form-group">
+        <label>Reading</label>
+        <div class="rating-group" id="ratingReading">
+          <label><input type="radio" name="reading" value="Excellent"> Excellent</label>
+          <label><input type="radio" name="reading" value="Good"> Good</label>
+          <label><input type="radio" name="reading" value="Average"> Average</label>
+          <label><input type="radio" name="reading" value="Needs Work"> Needs Work</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Memorisation</label>
+        <div class="rating-group" id="ratingMemory">
+          <label><input type="radio" name="memory" value="Excellent"> Excellent</label>
+          <label><input type="radio" name="memory" value="Good"> Good</label>
+          <label><input type="radio" name="memory" value="Average"> Average</label>
+          <label><input type="radio" name="memory" value="Needs Work"> Needs Work</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Behaviour</label>
+        <div class="rating-group" id="ratingBehaviour">
+          <label><input type="radio" name="behaviour" value="Excellent"> Excellent</label>
+          <label><input type="radio" name="behaviour" value="Good"> Good</label>
+          <label><input type="radio" name="behaviour" value="Average"> Average</label>
+          <label><input type="radio" name="behaviour" value="Needs Work"> Needs Work</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="evalTeacher">Teacher's Name</label>
+        <input type="text" id="evalTeacher" placeholder="Enter your name" />
+      </div>
+
+      <div class="form-group">
+        <label for="evalNotes">Notes (optional)</label>
+        <textarea id="evalNotes" placeholder="Any additional comments..."></textarea>
+      </div>
+
+      <button class="btn-submit" onclick="submitEvaluation()">Save Evaluation</button>
+      <p class="msg" id="evalMsg"></p>
+    </div>
+  </div>
+
+  <div class="section-title">Evaluation Records</div>
+
+  <div class="filter-row">
+    <label for="filterStudent" style="font-size:13px;font-weight:bold">Filter by student:</label>
+    <select id="filterStudent" onchange="renderEvals()">
+      <option value="">All students</option>
+    </select>
+  </div>
+
+  <p class="empty-note" id="emptyEvals">No evaluations recorded yet.</p>
+  <table class="eval-table" id="evalTable" style="display:none">
+    <thead>
+      <tr>
+        <th>Student</th>
+        <th>Lesson</th>
+        <th>Reading</th>
+        <th>Memorisation</th>
+        <th>Behaviour</th>
+        <th>Teacher</th>
+        <th>Notes</th>
+        <th>Date</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="evalTableBody"></tbody>
+  </table>
+
+  <div class="page-nav">
+    <a href="register.html" class="btn-prev">&larr; Register Students</a>
+    <a href="login.html" class="btn-next">Logout &rarr;</a>
+  </div>
+
+</div>
+</div>
+
+<script>
+  // Auth guard – teachers only
+  (function() {
+    const role = sessionStorage.getItem('ya_role');
+    if (role !== 'teacher') window.location.href = 'login.html';
+  })();
+
+  function getStudents() {
+    return JSON.parse(localStorage.getItem('yasarna_students') || '[]');
+  }
+
+  function getEvals() {
+    return JSON.parse(localStorage.getItem('yasarna_evals') || '[]');
+  }
+
+  function saveEvals(list) {
+    localStorage.setItem('yasarna_evals', JSON.stringify(list));
+  }
+
+  function escHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function badgeClass(val) {
+    if (val === 'Excellent') return 'badge-excellent';
+    if (val === 'Good') return 'badge-good';
+    if (val === 'Average') return 'badge-average';
+    return 'badge-needswork';
+  }
+
+  function populateStudentDropdowns() {
+    const students = getStudents();
+    const evalSelect = document.getElementById('evalStudent');
+    const filterSelect = document.getElementById('filterStudent');
+    const noWarn = document.getElementById('noStudentsWarn');
+    const formWrap = document.getElementById('evalFormWrap');
+
+    // clear existing options (keep placeholder / "All")
+    evalSelect.innerHTML = '<option value="">-- Select student --</option>';
+    filterSelect.innerHTML = '<option value="">All students</option>';
+
+    if (students.length === 0) {
+      noWarn.style.display = '';
+      formWrap.style.display = 'none';
+      return;
+    }
+
+    noWarn.style.display = 'none';
+    formWrap.style.display = '';
+
+    students.forEach(s => {
+      const opt1 = document.createElement('option');
+      opt1.value = s.regNumber;
+      opt1.textContent = `${s.name} (${s.regNumber})`;
+      evalSelect.appendChild(opt1);
+
+      const opt2 = opt1.cloneNode(true);
+      filterSelect.appendChild(opt2);
+    });
+  }
+
+  function getRadioValue(name) {
+    const checked = document.querySelector(`input[name="${name}"]:checked`);
+    return checked ? checked.value : '';
+  }
+
+  function submitEvaluation() {
+    const student = document.getElementById('evalStudent').value;
+    const lesson = document.getElementById('evalLesson').value.trim();
+    const reading = getRadioValue('reading');
+    const memory = getRadioValue('memory');
+    const behaviour = getRadioValue('behaviour');
+    const teacher = document.getElementById('evalTeacher').value.trim();
+    const notes = document.getElementById('evalNotes').value.trim();
+    const msg = document.getElementById('evalMsg');
+
+    if (!student || !lesson || !reading || !memory || !behaviour || !teacher) {
+      msg.textContent = 'Please fill in all required fields and select all ratings.';
+      msg.className = 'msg error';
+      return;
+    }
+
+    const students = getStudents();
+    const studentObj = students.find(s => s.regNumber === student);
+
+    const evals = getEvals();
+    evals.unshift({
+      studentName: studentObj ? studentObj.name : student,
+      regNumber: student,
+      lesson,
+      reading,
+      memory,
+      behaviour,
+      teacher,
+      notes,
+      date: new Date().toLocaleDateString()
+    });
+    saveEvals(evals);
+
+    // reset form
+    document.getElementById('evalStudent').value = '';
+    document.getElementById('evalLesson').value = '';
+    document.getElementById('evalTeacher').value = '';
+    document.getElementById('evalNotes').value = '';
+    document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+
+    msg.textContent = 'Evaluation saved successfully.';
+    msg.className = 'msg success';
+    setTimeout(() => msg.textContent = '', 3000);
+    renderEvals();
+  }
+
+  function deleteEval(index) {
+    if (!confirm('Delete this evaluation?')) return;
+    const evals = getEvals();
+    evals.splice(index, 1);
+    saveEvals(evals);
+    renderEvals();
+  }
+
+  function renderEvals() {
+    const filterVal = document.getElementById('filterStudent').value;
+    let evals = getEvals();
+    if (filterVal) evals = evals.filter(e => e.regNumber === filterVal);
+
+    const tbody = document.getElementById('evalTableBody');
+    const table = document.getElementById('evalTable');
+    const empty = document.getElementById('emptyEvals');
+    tbody.innerHTML = '';
+
+    if (evals.length === 0) {
+      table.style.display = 'none';
+      empty.style.display = '';
+      return;
+    }
+
+    table.style.display = '';
+    empty.style.display = 'none';
+
+    // We need original indices for deletion when filtered
+    const allEvals = getEvals();
+
+    evals.forEach(ev => {
+      const origIndex = allEvals.indexOf(ev);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${escHtml(ev.studentName)}<br><small style="color:#888">${escHtml(ev.regNumber)}</small></td>
+        <td>${escHtml(ev.lesson)}</td>
+        <td><span class="badge ${badgeClass(ev.reading)}">${escHtml(ev.reading)}</span></td>
+        <td><span class="badge ${badgeClass(ev.memory)}">${escHtml(ev.memory)}</span></td>
+        <td><span class="badge ${badgeClass(ev.behaviour)}">${escHtml(ev.behaviour)}</span></td>
+        <td>${escHtml(ev.teacher)}</td>
+        <td>${escHtml(ev.notes) || '<span style="color:#aaa">—</span>'}</td>
+        <td>${escHtml(ev.date)}</td>
+        <td><button class="btn-delete" onclick="deleteEval(${origIndex})">Delete</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  populateStudentDropdowns();
+  renderEvals();
+
+  // Welcome message
+  const tName = sessionStorage.getItem('ya_teacher');
+  if (tName) document.getElementById('teacherWelcome').textContent = 'Welcome, ' + tName;
+
+  function logout() {
+    sessionStorage.clear();
+    window.location.href = 'login.html';
+  }
+</script>
+</body>
+</html>
